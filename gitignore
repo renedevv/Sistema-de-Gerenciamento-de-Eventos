@@ -1,0 +1,43 @@
+
+---
+
+### **.gitignore**
+
+---
+
+```plaintext
+# Ignorar arquivos temporários do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Ignorar arquivos e pastas relacionados a bancos de dados locais
+*.sqlite3
+*.db
+
+# Ignorar logs
+*.log
+
+# Ignorar arquivos de configuração de ambientes locais
+.env
+*.env
+
+# Ignorar diretórios do sistema
+node_modules/
+.vscode/
+.idea/
+__pycache__/
+*.pyc
+
+# Ignorar arquivos e pastas relacionados a backups
+*.bak
+*.backup
+
+# Ignorar arquivos de compilação
+*.out
+*.o
+*.a
+*.so
+
+# Ignorar arquivos e pastas relacionados ao git
+.git/
+.gitignore
