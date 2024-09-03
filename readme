@@ -1,0 +1,76 @@
+# Sistema de Gerenciamento de Eventos
+
+## Descrição
+
+Este projeto é um sistema de gerenciamento de eventos desenvolvido em MySQL. Ele permite gerenciar eventos, participantes e inscrições de forma eficaz, com funcionalidades para criar, consultar, atualizar e excluir registros.
+
+## Estrutura do Projeto
+
+1. **Banco de Dados:** O banco de dados `GerenciamentoEventos` contém três tabelas principais:
+   - `Eventos`: Armazena informações sobre os eventos.
+   - `Participantes`: Armazena informações sobre os participantes.
+   - `Inscricoes`: Armazena informações sobre as inscrições dos participantes nos eventos.
+
+2. **Funcionalidades:**
+   - **Inserção de Dados:** É possível adicionar novos eventos, participantes e inscrições.
+   - **Consultas:** Realize consultas para listar eventos, participantes inscritos em um evento específico e eventos nos quais um participante está inscrito.
+   - **Atualização de Dados:** Atualize informações de eventos e participantes conforme necessário.
+   - **Deleção de Dados:** Remova eventos passados e inscrições conforme necessário.
+
+## Comandos Principais
+
+### Criação do Banco de Dados e Tabelas
+```sql
+CREATE DATABASE GerenciamentoEventos;
+USE GerenciamentoEventos;
+
+CREATE TABLE Eventos (
+    EventoID INT AUTO_INCREMENT PRIMARY KEY,
+    NomeEvento VARCHAR(100) NOT NULL,
+    DataEvento DATE NOT NULL,
+    LocalEvento VARCHAR(100) NOT NULL,
+    Descricao TEXT
+);
+
+CREATE TABLE Participantes (
+    ParticipanteID INT AUTO_INCREMENT PRIMARY KEY,
+    NomeParticipante VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) NOT NULL,
+    Telefone VARCHAR(15)
+);
+
+CREATE TABLE Inscricoes (
+    InscricaoID INT AUTO_INCREMENT PRIMARY KEY,
+    EventoID INT,
+    ParticipanteID INT,
+    DataInscricao DATE NOT NULL,
+    FOREIGN KEY (EventoID) REFERENCES Eventos(EventoID),
+    FOREIGN KEY (ParticipanteID) REFERENCES Participantes(ParticipanteID)
+);
+INSERT INTO Eventos (NomeEvento, DataEvento, LocalEvento, Descricao) VALUES
+('Workshop de Python', '2024-09-20', 'Sala 101', 'Workshop intensivo sobre Python para iniciantes.'),
+('Conferência de TI', '2024-10-10', 'Auditório Principal', 'Conferência anual sobre inovações em TI.'),
+('Palestra de Segurança Digital', '2024-11-05', 'Sala 202', 'Palestra sobre as melhores práticas de segurança digital.');
+
+INSERT INTO Participantes (NomeParticipante, Email, Telefone) VALUES
+('João Silva', 'joao.silva@email.com', '123456789'),
+('Maria Oliveira', 'maria.oliveira@email.com', '987654321'),
+('Pedro Santos', 'pedro.santos@email.com', '123123123');
+SELECT * FROM Eventos;
+
+SELECT p.NomeParticipante, p.Email, p.Telefone 
+FROM Inscricoes i 
+JOIN Participantes p ON i.ParticipanteID = p.ParticipanteID 
+WHERE i.EventoID = 1;
+UPDATE Eventos 
+SET LocalEvento = 'Auditório 2', DataEvento = '2024-09-22' 
+WHERE EventoID = 1;
+
+UPDATE Participantes 
+SET Email = 'novo.email@email.com' 
+WHERE ParticipanteID = 2;
+DELETE FROM Eventos 
+WHERE EventoID = 2;
+
+DELETE FROM Inscricoes 
+WHERE InscricaoID = 3;
